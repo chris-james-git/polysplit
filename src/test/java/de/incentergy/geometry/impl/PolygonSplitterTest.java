@@ -1,15 +1,14 @@
 package de.incentergy.geometry.impl;
 
-import static org.junit.Assert.assertEquals;
+import de.incentergy.geometry.PolygonSplitter;
+import org.junit.jupiter.api.Test;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 
 import java.util.List;
 
-import org.junit.Test;
-
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.io.WKTReader;
-
-import de.incentergy.geometry.PolygonSplitter;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PolygonSplitterTest {
 
@@ -58,5 +57,4 @@ public class PolygonSplitterTest {
     private static void assertPolygonEquals(String expectedPolygonWkt, Polygon actual) {
         assertEquals(expectedPolygonWkt, actual.toString());
     }
-
 }

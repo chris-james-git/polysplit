@@ -1,18 +1,19 @@
 package de.incentergy.geometry.utils;
 
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryCollection;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.operation.polygonize.Polygonizer;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineSegment;
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 
 public final class GeometryFactoryUtils {
 
@@ -23,6 +24,7 @@ public final class GeometryFactoryUtils {
 
     /**
      * Creates a triangle polygon with vertices in the provided order
+     *
      * @return
      */
     public static Polygon createTriangle(Coordinate vertex1, Coordinate vertex2, Coordinate vertex3) {
@@ -36,6 +38,7 @@ public final class GeometryFactoryUtils {
 
     /**
      * Creates a polygon with vertices in the provided order
+     *
      * @return
      */
     public static Polygon createPolygon(Coordinate... vertices) {
@@ -57,8 +60,8 @@ public final class GeometryFactoryUtils {
      * Note: possibly could be simplified by using {@link Polygonizer}
      *
      * @param polygonToSplit
-     * @param startVertex a vertex of the exterior ring where to start
-     * @param endVertex a vertex of the exterior ring where to end
+     * @param startVertex    a vertex of the exterior ring where to start
+     * @param endVertex      a vertex of the exterior ring where to end
      * @return
      */
     public static Polygon getSubpolygon(Polygon polygonToSplit, Coordinate startVertex, Coordinate endVertex) {
@@ -101,8 +104,8 @@ public final class GeometryFactoryUtils {
      * Note: possibly could be simplified by using {@link Polygonizer}
      *
      * @param polygonToSlice
-     * @param startPoint a point along the exterior ring where to start
-     * @param endPoint a point along the exterior ring where to end
+     * @param startPoint     a point along the exterior ring where to start
+     * @param endPoint       a point along the exterior ring where to end
      * @return
      */
     public static Polygon slicePolygon(Polygon polygonToSlice, Coordinate startPoint, Coordinate endPoint) {

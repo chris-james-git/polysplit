@@ -1,29 +1,27 @@
 package de.incentergy.geometry.utils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.LineSegment;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.io.WKTReader;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import de.incentergy.geometry.utils.GeometryUtils.IntersectionCoordinate;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.io.WKTReader;
 
-@RunWith(Enclosed.class)
 public class GeometryUtilsTest {
     private static final double EXACT_PRECISION = 0;
 
-    public static class GetIntersectionTest {
+    @Nested
+    public class GetIntersectionTest {
 
         @Test
         public void nonTouchingEdges() throws Exception {
@@ -64,7 +62,8 @@ public class GeometryUtilsTest {
         }
     }
 
-    public static class GetProjectedPointTest {
+    @Nested
+    public class GetProjectedPointTest {
 
         @Test
         public void projectionForEdgesFormingARectangle() throws Exception {
@@ -144,29 +143,38 @@ public class GeometryUtilsTest {
 
         @Test
         public void projectionForPerpendicularIntersectingEdges() throws Exception {
-            LineSegment edgeA = new LineSegment(new Coordinate(0, 0), new Coordinate(0, 20));               // vertical   edge at x = 0, when y = [0; 20]
-            LineSegment edgeB = new LineSegment(new Coordinate(5, 10), new Coordinate(15, 10));             // horizontal edge at y = 10 when x = [5; 15]
+            // vertical edge at x = 0, when y = [0; 20]
+            LineSegment vertical = new LineSegment(new Coordinate(0, 0), new Coordinate(0, 20));
+            // horizontal edge at y = 10 when x = [5; 15]
+            LineSegment horizontal = new LineSegment(new Coordinate(5, 10), new Coordinate(15, 10));
 
-            IntersectionCoordinate intersection = new IntersectionCoordinate(0, 10, edgeA, edgeB);
+            // intersection = (0, 10)
+            IntersectionCoordinate intersection = new IntersectionCoordinate(0, 10, vertical, horizontal);
 
-            Coordinate projectedPoint = GeometryUtils.getProjectedPoint(edgeB.p0, edgeA, intersection);     // project point (5; 10) onto vertical edge
+            // project point (5; 10) onto vertical edge
+            Coordinate projectedPoint = GeometryUtils.getProjectedPoint(horizontal.p0, vertical, intersection);
             assertEquals(0, projectedPoint.x, EXACT_PRECISION);
             assertEquals(15, projectedPoint.y, EXACT_PRECISION);
 
-            projectedPoint = GeometryUtils.getProjectedPoint(edgeB.p1, edgeA, intersection);                // project point (15; 10) onto vertical edge
+            // project point (15; 10) onto vertical edge
+            projectedPoint = GeometryUtils.getProjectedPoint(horizontal.p1, vertical, intersection);
             assertNull(projectedPoint);
 
-            projectedPoint = GeometryUtils.getProjectedPoint(edgeA.p0, edgeB, intersection);                // project point (0; 0) onto horizontal edge
-            assertNull(projectedPoint);
+            // TODO: Doesn't the intersection need to be recalculated here before switching to horizontal opposing edge?
+            // project point (0; 0) onto horizontal edge
+            projectedPoint = GeometryUtils.getProjectedPoint(vertical.p0, horizontal, intersection);
+            assertNull(projectedPoint); // Expected null, Actual: (10, 10, NaN)
 
             // TODO: need to handle this better
-            projectedPoint = GeometryUtils.getProjectedPoint(edgeA.p1, edgeB, intersection);                // project point (0; 20) onto horizontal edge
+            // project point (0; 20) onto horizontal edge
+            projectedPoint = GeometryUtils.getProjectedPoint(vertical.p1, horizontal, intersection);
             assertEquals(10, projectedPoint.x, EXACT_PRECISION);
             assertEquals(10, projectedPoint.y, EXACT_PRECISION);
         }
     }
 
-    public static class GetLineSegmentTest {
+    @Nested
+    public class GetLineSegmentTest {
 
         @Test
         public void testGetLineSegment() throws Exception {
@@ -197,7 +205,8 @@ public class GeometryUtilsTest {
         }
     }
 
-    public static class IsIntersectingPolygonTest {
+    @Nested
+    public class IsIntersectingPolygonTest {
 
         @Test
         public void touchesEdgesReturnsFalse() throws Exception {
@@ -216,7 +225,8 @@ public class GeometryUtilsTest {
         }
     }
 
-    public static class IsPointOnLineSegmentTest {
+    @Nested
+    public class IsPointOnLineSegmentTest {
 
         @Test
         public void includingEndpoints() throws Exception {

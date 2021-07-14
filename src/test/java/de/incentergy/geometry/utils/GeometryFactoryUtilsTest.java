@@ -1,19 +1,17 @@
 package de.incentergy.geometry.utils;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.io.WKTReader;
 
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.io.WKTReader;
-
-@RunWith(Enclosed.class)
 public class GeometryFactoryUtilsTest {
 
-    public static class GetSubolygonTests {
+    @Nested
+    public class GetSubolygonTests {
 
         @Test
         public void simpleCase() throws Exception {
@@ -32,7 +30,8 @@ public class GeometryFactoryUtilsTest {
         }
     }
 
-    public static class SlicePolygonTests {
+    @Nested
+    public class SlicePolygonTests {
 
         @Test
         public void startPointIsStartOfRing() throws Exception {
@@ -81,7 +80,5 @@ public class GeometryFactoryUtilsTest {
             Polygon result = GeometryFactoryUtils.slicePolygon(polygon, new Coordinate(20, 0), new Coordinate(90, 50));
             assertEquals("POLYGON ((20 0, 0 100, 80 100, 90 50, 20 0))", result.toString());
         }
-
-
     }
 }

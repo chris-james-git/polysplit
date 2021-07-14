@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.LineSegment;
-import com.vividsolutions.jts.geom.Polygon;
 
 import de.incentergy.geometry.utils.GeometryFactoryUtils;
 import de.incentergy.geometry.utils.GeometryUtils;
 import de.incentergy.geometry.utils.GeometryUtils.IntersectionCoordinate;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.Polygon;
 
 /**
  * Represents a pair of edges on polygon's exterior ring.<br>
@@ -173,8 +173,6 @@ class EdgePair {
          * Produces a a collection of possible cuts located in one of {@link EdgePairSubpolygons}.
          * @param polygon The polygon from which the area should be cut away
          * @param singlePartArea area to cut away
-         * @param segmentCountBetweenEdgePair number of line segments between edgeA and edgeB (exclusive)
-         * @param segmentCountOutsideEdgePair number of line segments between edgeB and edgeA (exclusive)
          * @return A list of 0, 1 or 2 possible cuts
          */
         public List<Cut> getCuts(Polygon polygon, double singlePartArea) {

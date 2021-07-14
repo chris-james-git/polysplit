@@ -5,13 +5,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.LineSegment;
-import com.vividsolutions.jts.geom.Polygon;
 
 import de.incentergy.geometry.PolygonSplitter;
 import de.incentergy.geometry.impl.EdgePair.EdgePairSubpolygons;
 import de.incentergy.geometry.utils.GeometryFactoryUtils;
 import de.incentergy.geometry.utils.GeometryUtils;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.TopologyException;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 
 /**
  * {@link PolygonSplitter} implementation based on the algorithm by Sumit Khetarpal
@@ -20,6 +25,9 @@ import de.incentergy.geometry.utils.GeometryUtils;
  */
 public class GreedyPolygonSplitter implements PolygonSplitter {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Polygon> split(Polygon originalPolygon, int numberOfParts) {
         if (!originalPolygon.isValid()) {
@@ -54,6 +62,19 @@ public class GreedyPolygonSplitter implements PolygonSplitter {
         return Collections.unmodifiableList(polygonParts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public String split(String originalWktPolygon, int numberOfParts) throws ParseException {
+        Polygon polygon = (Polygon) new WKTReader().read(originalWktPolygon);
+        if (!polygon.isValid()) {
+            throw new TopologyException("Invalid polygon: " + originalWktPolygon);
+        }
+        List<Polygon> parts = split(polygon, numberOfParts);
+        MultiPolygon multiPolygon = new MultiPolygon(parts.toArray(new Polygon[0]), new GeometryFactory());
+        return multiPolygon.toString();
+    }
+
     private Polygon split(Polygon polygon, List<Polygon> resultList, double singlePartArea) {
         List<LineSegment> segments = GeometryUtils.getLineSegments(polygon.getExteriorRing());
 
@@ -84,5 +105,4 @@ public class GreedyPolygonSplitter implements PolygonSplitter {
 
         return (Polygon) polygon.difference(shortestCut.getCutAway());
     }
-
 }

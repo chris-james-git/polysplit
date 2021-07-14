@@ -1,15 +1,15 @@
 package de.incentergy.geometry.utils;
 
+import org.locationtech.jts.algorithm.LineIntersector;
+import org.locationtech.jts.algorithm.RobustLineIntersector;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.util.AffineTransformation;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.vividsolutions.jts.algorithm.LineIntersector;
-import com.vividsolutions.jts.algorithm.RobustLineIntersector;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.LineSegment;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.geom.util.AffineTransformation;
 
 public final class GeometryUtils {
 
@@ -94,8 +94,8 @@ public final class GeometryUtils {
 
                 /*
                  * If we draw a line perpendicular to the opposingEdge and crossing it at intersection point, two scenarios are possible:
-                 *   1) Vertex and oposingEdge falls on different sides of this perpendicularLine
-                 *   2) Vertex and oposingEdge falls on one side of this perpendicularLine
+                 *   1) Vertex and opposingEdge falls on different sides of this perpendicularLine
+                 *   2) Vertex and opposingEdge falls on one side of this perpendicularLine
                  * In 1st case we can discard the point straight away, as the projection will fall outside the opposingEdge (on the other side of the intersection point)
                  * In 2nd case we can shorten the opposingEdge by removing the part of the edge that lies on the other side of the perpendicular line
                  */
@@ -123,8 +123,8 @@ public final class GeometryUtils {
                     // the intersection point is outside of the edge
                     int orientationIndexOfEdge = perpendicularLine.orientationIndex(opposingEdge);   // -1 or +1
                     // TODO: need to handle edge pairs better
-//                    boolean vertexIsOnPerpendicularLine = orientationIndexOfVertex == 0;             // this is needed to handle cases when both edges are perpendicular to each other
-                    boolean vertexIsOnPerpendicularLine = false;
+                    boolean vertexIsOnPerpendicularLine = orientationIndexOfVertex == 0;             // this is needed to handle cases when both edges are perpendicular to each other
+                    //boolean vertexIsOnPerpendicularLine = false;
                     if (!vertexIsOnPerpendicularLine && orientationIndexOfVertex != orientationIndexOfEdge) {
                         // projection of vertex is located somewhere on the opposite side of the intersection point (not on the edge)
                         return null;
