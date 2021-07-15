@@ -1,11 +1,5 @@
 package de.incentergy.geometry.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-
 import de.incentergy.geometry.PolygonSplitter;
 import de.incentergy.geometry.impl.EdgePair.EdgePairSubpolygons;
 import de.incentergy.geometry.utils.GeometryFactoryUtils;
@@ -14,9 +8,13 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.geom.TopologyException;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * {@link PolygonSplitter} implementation based on the algorithm by Sumit Khetarpal
@@ -30,12 +28,7 @@ public class GreedyPolygonSplitter implements PolygonSplitter {
      */
     @Override
     public List<Polygon> split(Polygon originalPolygon, int numberOfParts) {
-        if (!originalPolygon.isValid()) {
-            throw new IllegalArgumentException("Polygon is not valid!");
-        }
-        if (numberOfParts < 2) {
-            throw new IllegalArgumentException("Number of parts should be greater than 1!");
-        }
+        validate(originalPolygon, numberOfParts);
         // TODO: add validation - at least 4 sides, no holes
 
         double singlePartArea = originalPolygon.getArea() / numberOfParts;
@@ -67,9 +60,7 @@ public class GreedyPolygonSplitter implements PolygonSplitter {
      */
     public String split(String originalWktPolygon, int numberOfParts) throws ParseException {
         Polygon polygon = (Polygon) new WKTReader().read(originalWktPolygon);
-        if (!polygon.isValid()) {
-            throw new TopologyException("Invalid polygon: " + originalWktPolygon);
-        }
+        validate(polygon, numberOfParts);
         List<Polygon> parts = split(polygon, numberOfParts);
         MultiPolygon multiPolygon = new MultiPolygon(parts.toArray(new Polygon[0]), new GeometryFactory());
         return multiPolygon.toString();

@@ -28,4 +28,12 @@ public interface PolygonSplitter {
      */
     String split(String wktPolygon, int parts) throws ParseException;
 
+    default void validate(Polygon polygon, int parts) {
+        if (!polygon.isValid()) {
+            throw new IllegalArgumentException("Polygon is not valid!");
+        }
+        if (parts < 2) {
+            throw new IllegalArgumentException("Number of parts should be greater than 1!");
+        }
+    }
 }

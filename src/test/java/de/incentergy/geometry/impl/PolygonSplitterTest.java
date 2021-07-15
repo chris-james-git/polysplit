@@ -54,6 +54,40 @@ public class PolygonSplitterTest {
         assertEquals(expectedPartArea, parts.get(2).getArea(), expectedDelta);
     }
 
+    @Test
+    public void testSplitWkt4gonInto5EqualPartsTrapezoid1() throws ParseException {
+
+        // POLYGON ((50 0, 100 0, 90 50, 50 50, 50 0))
+        String wktMultipolygon = polygonSplitter.split("POLYGON ((50 0, 100 0, 90 50, 50 50, 50 0))", 5);
+
+        // MULTIPOLYGON (((86 0, 100 0, 90 50, 86 50, 86 0)), ((50 37.5, 50 50, 86 50, 86 37.5, 50 37.5)), ((50 25, 50 37.5, 86 37.5, 86 25, 50 25)), ((68 0, 50 0, 50 25, 68 25, 68 0)), ((86 0, 68 0, 68 25, 86 25, 86 0)))
+        assertEquals("MULTIPOLYGON (" +
+                "((86 0, 100 0, 90 50, 86 50, 86 0)), " +
+                "((50 37.5, 50 50, 86 50, 86 37.5, 50 37.5)), " +
+                "((50 25, 50 37.5, 86 37.5, 86 25, 50 25)), " +
+                "((68 0, 50 0, 50 25, 68 25, 68 0)), " +
+                "((86 0, 68 0, 68 25, 86 25, 86 0)))", wktMultipolygon);
+    }
+
+    @Test
+    public void testSplitWkt4gonInto5EqualPartsTrapezium() throws ParseException {
+
+        // POLYGON ((0 0, 100 0, 90 50, 10 50, 0 0))
+        String wktMultipolygon = polygonSplitter.split("POLYGON ((0 0, 100 0, 90 50, 10 50, 0 0))", 5);
+
+        // MULTIPOLYGON (((77 0, 100 0, 90 50, 77 50, 77 0)), ((23 0, 0 0, 10 50, 23 50, 23 0)), ((41 0, 23 0, 23 50, 41 50, 41 0)), ((41 25, 41 50, 77 50, 77 25, 41 25)), ((77 0, 41 0, 41 25, 77 25, 77 0)))
+        assertEquals("MULTIPOLYGON (" +
+                "((77 0, 100 0, 90 50, 77 50, 77 0)), " +
+                "((23 0, 0 0, 10 50, 23 50, 23 0)), " +
+                "((41 0, 23 0, 23 50, 41 50, 41 0)), " +
+                "((41 25, 41 50, 77 50, 77 25, 41 25)), " +
+                "((77 0, 41 0, 41 25, 77 25, 77 0)))", wktMultipolygon);
+    }
+
+    // TODO: CONTINUE ADDING A FEW MORE TESTS, THEN CREATE THE USER INPUT FLOW - ask the user for the four coordinates
+    //  of the input polygon. Also, what assumptions have I made in implementing this algorithm?
+
+    // TODO: Time a huge number of runs to see how slow it is. Compare with my "fast" solution
     private static void assertPolygonEquals(String expectedPolygonWkt, Polygon actual) {
         assertEquals(expectedPolygonWkt, actual.toString());
     }
