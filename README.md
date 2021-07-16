@@ -18,6 +18,13 @@ polygons, as long as they don't have any intersecting edges and are defined by a
 This particular fork also includes the addition of an "approximate cut" algorithm that is based on 
 [this concept by Darafei Praliaskouski](https://lists.osgeo.org/pipermail/postgis-users/2018-June/042795.html).
 
+## Code Example
+```
+    Polygon polygon = (Polygon) new WKTReader().read("POLYGON ((0 0, 100 0, 90 50, 10 50, 0 0))");
+    List<Polygon> parts = new RandomPolygonSplitter().split(polygon, 2);
+```
+
+
 ## Command Line UI
 
 There is also a command line input feature that lets you choose either the precise
@@ -25,6 +32,8 @@ method or the approximate method.
 
 The inputs can be either "Standard" (WKT polygon + any number of parts)
 or Demo (4 vertex input, 5 part split).
+
+The output is a WKT format MULTIPOLYGON.
 
 ## Known issues
 
