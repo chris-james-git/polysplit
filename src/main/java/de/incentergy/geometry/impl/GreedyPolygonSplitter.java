@@ -24,18 +24,24 @@ import java.util.List;
 public class GreedyPolygonSplitter implements PolygonSplitter {
 
     /**
-     * {@inheritDoc}
+     * Splits the polygon into parts of equal area
+     *
+     * @param originalPolygon - polygon to split
+     * @param numPts - number of equal area parts that must be produced
+     * @return
      */
     @Override
-    public List<Polygon> split(Polygon originalPolygon, int numberOfParts) {
-        validate(originalPolygon, numberOfParts);
+    public List<Polygon> split(Polygon originalPolygon, int numPts) {
+        if (!validate(originalPolygon, numPts)) {
+            return null;
+        }
         // TODO: add validation - at least 4 sides, no holes
 
-        double singlePartArea = originalPolygon.getArea() / numberOfParts;
+        double singlePartArea = originalPolygon.getArea() / numPts;
 
-        List<Polygon> polygonParts = new ArrayList<>(numberOfParts);
+        List<Polygon> polygonParts = new ArrayList<>(numPts);
         Polygon remainingPoly = originalPolygon;
-        for (int i = 0; i < numberOfParts - 1; i++) {
+        for (int i = 0; i < numPts - 1; i++) {
             remainingPoly = split(remainingPoly, polygonParts, singlePartArea);
         }
         polygonParts.add(remainingPoly);
@@ -53,17 +59,6 @@ public class GreedyPolygonSplitter implements PolygonSplitter {
         }
 
         return Collections.unmodifiableList(polygonParts);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String split(String originalWktPolygon, int numberOfParts) throws ParseException {
-        Polygon polygon = (Polygon) new WKTReader().read(originalWktPolygon);
-        validate(polygon, numberOfParts);
-        List<Polygon> parts = split(polygon, numberOfParts);
-        MultiPolygon multiPolygon = new MultiPolygon(parts.toArray(new Polygon[0]), new GeometryFactory());
-        return multiPolygon.toString();
     }
 
     private Polygon split(Polygon polygon, List<Polygon> resultList, double singlePartArea) {

@@ -1,5 +1,5 @@
 /*
- * Class : FastPolygonSplitterTest
+ * Class : RandomPolygonSplitterTest
  * Author: Chris James
  * Email : chrisdjames1@gmail.com
  * Date  : 15 July 2021
@@ -17,9 +17,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FastPolygonSplitterTest {
+public class RandomPolygonSplitterTest {
 
-    private final FastPolygonSplitter polygonSplitter = new FastPolygonSplitter();
+    private final RandomPolygonSplitter polygonSplitter = new RandomPolygonSplitter();
 
     @Test
     public void splitTrapeziumRoughlyInHalf() throws ParseException {

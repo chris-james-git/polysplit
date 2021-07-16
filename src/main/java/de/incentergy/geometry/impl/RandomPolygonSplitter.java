@@ -1,5 +1,5 @@
 /*
- * Class : FastPolygonSplitter
+ * Class : RandomPolygonSplitter
  * Author: Chris James
  * Email : chrisdjames1@gmail.com
  * Date  : 15 July 2021
@@ -17,17 +17,16 @@ import de.incentergy.geometry.PolygonSplitter;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.MultiPoint;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.io.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static de.incentergy.geometry.utils.FastGeometryFactoryUtils.generateRandomPoints;
-import static de.incentergy.geometry.utils.FastGeometryFactoryUtils.multipointFromDoubleArr;
-import static de.incentergy.geometry.utils.FastGeometryFactoryUtils.multipointToDoubleArr;
-import static de.incentergy.geometry.utils.FastGeometryFactoryUtils.multipointToVoronoi;
+import static de.incentergy.geometry.utils.RandomSplitterGeometryFactoryUtils.generateRandomPoints;
+import static de.incentergy.geometry.utils.RandomSplitterGeometryFactoryUtils.multipointFromDoubleArr;
+import static de.incentergy.geometry.utils.RandomSplitterGeometryFactoryUtils.multipointToDoubleArr;
+import static de.incentergy.geometry.utils.RandomSplitterGeometryFactoryUtils.multipointToVoronoi;
 
-public class FastPolygonSplitter implements PolygonSplitter {
+public class RandomPolygonSplitter implements PolygonSplitter {
 
     private static final int RANDOM_POINTS_COUNT = 1000;
 
@@ -41,7 +40,9 @@ public class FastPolygonSplitter implements PolygonSplitter {
     @Override
     public List<Polygon> split(Polygon polygon, int parts) {
 
-        validate(polygon, parts);
+        if (!validate(polygon, parts)) {
+            return null;
+        }
 
         // Convert a polygon to a set of points proportional to the area using
         //  JTS RandomPointsBuilder
@@ -64,15 +65,6 @@ public class FastPolygonSplitter implements PolygonSplitter {
             Polygon splitGon = (Polygon) polygon.intersection(splitMask.getGeometryN(i));
             splitPolys.add(splitGon);
         }
-
         return splitPolys;
     }
-
-    @Override
-    public String split(String wktPolygon, int parts) throws ParseException {
-        // TODO: Implement the WKT processing
-        return null;
-    }
-
-    // TODO: executable with main and input args
 }

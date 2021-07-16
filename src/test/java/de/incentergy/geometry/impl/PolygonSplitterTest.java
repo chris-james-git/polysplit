@@ -84,10 +84,6 @@ public class PolygonSplitterTest {
                 "((77 0, 41 0, 41 25, 77 25, 77 0)))", wktMultipolygon);
     }
 
-    // TODO: CONTINUE ADDING A FEW MORE TESTS, THEN CREATE THE USER INPUT FLOW - ask the user for the four coordinates
-    //  of the input polygon. Also, what assumptions have I made in implementing this algorithm?
-
-    // TODO: Time a huge number of runs to see how slow it is. Compare with my "fast" solution
     private static void assertPolygonEquals(String expectedPolygonWkt, Polygon actual) {
         assertEquals(expectedPolygonWkt, actual.toString());
     }

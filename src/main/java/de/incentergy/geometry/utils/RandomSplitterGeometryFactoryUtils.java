@@ -1,9 +1,9 @@
 /*
- * Class : FastGeometryFactoryUtils
+ * Class : RandomSplitterGeometryFactoryUtils
  * Author: Chris James
  * Email : chrisdjames1@gmail.com
  * Date  : 15 July 2021
- * Description : Provides geometry utilities for use with the FastPolygonSplitter.
+ * Description : Provides geometry utilities for use with the RandomPolygonSplitter.
  */
 package de.incentergy.geometry.utils;
 
@@ -14,11 +14,11 @@ import org.locationtech.jts.geom.MultiPoint;
 import org.locationtech.jts.shape.random.RandomPointsBuilder;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
-public class FastGeometryFactoryUtils {
+public class RandomSplitterGeometryFactoryUtils {
 
     private static final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory();
 
-    private FastGeometryFactoryUtils() {
+    private RandomSplitterGeometryFactoryUtils() {
     }
 
     public static MultiPoint generateRandomPoints(Geometry mask, int numPts) {

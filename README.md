@@ -1,8 +1,11 @@
 # polysplit
 
-## Synopsis
+## Synopsis - Precisely Equal Parts
 
-The purpose of this project is to split a given [JTS](http://www.vividsolutions.com/jts/JTSHome.htm) polygon into any number of equal areas, while ensuring minimum length of line based cuts. The solution is based on [this algorithm by Sumit Khetarpal](http://www.khetarpal.org/polygon-splitting/). It works for both convex and concave polygons, as long as they don't have any intersecting edges and are defined by a single exterior ring.
+The purpose of this project is to split a given [JTS](http://www.vividsolutions.com/jts/JTSHome.htm) polygon into any 
+number of equal areas, while ensuring minimum length of line based cuts. The solution is based on 
+[this algorithm by Sumit Khetarpal](http://www.khetarpal.org/polygon-splitting/). It works for both convex and concave 
+polygons, as long as they don't have any intersecting edges and are defined by a single exterior ring.
 
 ## Code Example
 ```
@@ -10,9 +13,14 @@ The purpose of this project is to split a given [JTS](http://www.vividsolutions.
     List<Polygon> parts = new GreedyPolygonSplitter().split(polygon, 2);
 ```
 
+## Synopsis - Approximately Equal Parts
+
+This particular fork also includes the addition of an "approximate cut" algorithm that is based on 
+[this concept by Darafei Praliaskouski](https://lists.osgeo.org/pipermail/postgis-users/2018-June/042795.html).
+
 ## Known issues
 
-**Caution: carefuly test the code before considering it production-ready!**
+**Caution: carefully test the code before considering it production-ready!**
 
 A list of known issues can be found under the issues tab.
 
@@ -20,7 +28,7 @@ A list of known issues can be found under the issues tab.
 
 The project is built using Maven.
 
-Currently requires JDK 8.
+Currently requires JDK 11.
 
 ## Tests
 
@@ -30,9 +38,18 @@ Test cases covering real-world or randomly generated scenarios could be added.
 
 ## Contributors
 
-Developed by: Gediminas Rimša
+Original fork (GreedyPolygonSplitter, EdgePair, Cut,
+GeometryFactoryUtils and GeometryUtils):
 
-Sponsored by: Incentergy GmbH 
+* Developed by: Gediminas Rimša
+
+* Sponsored by: Incentergy GmbH
+
+Additional work (RandomPolygonSplitter, RandomSplitterGeometryFactoryUtils)
+
+* Developed by: Chris James
+* Inspired by: Darafei "Komяpa" Praliaskouski
+* Dependency authors: Jason Altschuler (KMeans) and all JTS contributors.
 
 **Contributions are welcome!**
 
