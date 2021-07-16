@@ -18,6 +18,14 @@ polygons, as long as they don't have any intersecting edges and are defined by a
 This particular fork also includes the addition of an "approximate cut" algorithm that is based on 
 [this concept by Darafei Praliaskouski](https://lists.osgeo.org/pipermail/postgis-users/2018-June/042795.html).
 
+## Command Line UI
+
+There is also a command line input feature that lets you choose either the precise
+method or the approximate method.
+
+The inputs can be either "Standard" (WKT polygon + any number of parts)
+or Demo (4 vertex input, 5 part split).
+
 ## Known issues
 
 **Caution: carefully test the code before considering it production-ready!**
