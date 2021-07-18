@@ -36,7 +36,7 @@ public class PolySplit {
     private static final String GREEDY_OPTION_2_DEMO = "2. 5-part split demo (4 vertex polygon split into 5 parts)";
     private static final String GREEDY_OPTION_WAIT = "Enter choice: [ 1 or 2 ]";
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         println("\nPolySplit");
         println("Authors: " + authors);
         println(url);
