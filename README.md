@@ -73,7 +73,7 @@ Select `1` for the standard method which takes a WKT format polygon as input and
 Select `2` for a demo that asks the user to enter the coordinates of the vertices of a 4-sided polygon and then
 splits it into 5 parts.
 
-Example using the equal part ("Khetarpal") splitter on a trapezium, split into 7 parts:
+Example using the equal part ("Khetarpal") splitter on a trapezium, split into 5 parts:
 ```
 PolySplit
 Authors: Gediminas Rim?a and Chris James
@@ -98,8 +98,10 @@ POLYGON ((0 0, 100 0, 90 50, 10 50, 0 0))
 Enter the number of parts (min 2):
 5
 MULTIPOLYGON (((77 0, 100 0, 90 50, 77 50, 77 0)), ((23 0, 0 0, 10 50, 23 50, 23 0)), ((41 0, 23 0, 23 50, 41 50, 41 0)), ((41 25, 41 50, 77 50, 77 25, 41 25)), ((77 0, 41 0, 41 25, 77 25, 77 0)))
-
 ```
+(Images generated at (http://arthur-e.github.io/Wicket/sandbox-gmaps3.html)[http://arthur-e.github.io/Wicket/sandbox-gmaps3.html])
+![Trapezium split into 5 equal parts](./equal-split.jpg)
+
 And another example, using the random splitter for "approximately equal" parts with the 5-part 4-vertex demo. The polygon
 used is the same as in the previous example:
 ```
@@ -139,6 +141,11 @@ Enter double value for vertex 3 Y:
 50
 MULTIPOLYGON (((33.94130307858691 0, 0 0, 7.380541680243349 36.90270840121674, 34.78684336351697 21.232652033648577, 33.94130307858691 0)), ((68.69106121193533 0, 33.94130307858691 0, 34.78684336351697 21.232652033648577, 50.39151921885848 35.225794740219996, 67.94653771547277 21.03610479746363, 68.69106121193533 0)), ((7.380541680243349 36.90270840121674, 10 50, 50.853823137071316 50, 50.39151921885848 35.225794740219996, 34.78684336351697 21.232652033648577, 7.380541680243349 36.90270840121674)), ((50.853823137071316 50, 90 50, 92.76812495705238 36.159375214738084, 67.94653771547277 21.03610479746363, 50.39151921885848 35.225794740219996, 50.853823137071316 50)), ((92.76812495705238 36.159375214738084, 100 0, 68.69106121193533 0, 67.94653771547277 21.03610479746363, 92.76812495705238 36.159375214738084)))
 ```
+![Trapezium split into 5 roughly equal parts](./rough-split.jpg)
+
+## Further examples
+![Rough split of 8 vertex polygon with concave features](./rough-eplit-8-concave.jpg)
+
 ## Known issues
 
 **Caution: carefully test the code before considering it production-ready!**
