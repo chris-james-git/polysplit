@@ -167,7 +167,8 @@ GeometryFactoryUtils and GeometryUtils):
 
 * Sponsored by: Incentergy GmbH
 
-Additional work (RandomPolygonSplitter, RandomSplitterGeometryFactoryUtils)
+Additional work (RandomPolygonSplitter, RandomSplitterGeometryFactoryUtils,
+command line utility, upgrade to Java 11 and upgrade JTS version)
 
 * Developed by: Chris James
 * Inspired by: Darafei "Komяpa" Praliaskouski
